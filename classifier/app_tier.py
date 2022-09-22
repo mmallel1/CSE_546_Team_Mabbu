@@ -7,12 +7,12 @@ import json
 from image_classification import classifier
 
 # Create SQS client
-sqs = boto3.client('sqs', aws_access_key_id='AKIAUBFTG5VSPSDZDG6I',
-                   aws_secret_access_key='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', region_name='us-east-1')
+sqs = boto3.client('sqs', aws_access_key_id='AKIAUBFTG5VSL4BIHY4H',
+                   aws_secret_access_key='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', region_name='us-east-1')
 request_queue_url = "https://sqs.us-east-1.amazonaws.com/277401234788/Request_Queue"
 response_queue_url = "https://sqs.us-east-1.amazonaws.com/277401234788/Response_Queue"
-session = boto3.Session(aws_access_key_id="AKIAUBFTG5VSPSDZDG6I",
-                        aws_secret_access_key="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")
+session = boto3.Session(aws_access_key_id="AKIAUBFTG5VSL4BIHY4H",
+                        aws_secret_access_key="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")
 s3 = session.resource('s3')
 s3_input_bucket = "ccgroup2inputbucket"
 s3_output_bucket = "ccgroup2outputbucket"
@@ -104,10 +104,11 @@ def run_job():
         image_description = classifier(image_string)
         store_data_to_s3(image_string, image_name, image_description)
         send_data_to_sqs(image_description)
-        time.sleep(5)
+        time.sleep(10)
     else:
         time.sleep(10)
 
 
 while (True):
     run_job()
+    time.sleep(10)
